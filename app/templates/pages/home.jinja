@@ -1,7 +1,6 @@
 {#=====================================================
   Home page
-  - Hero style greeting banner
-  - List of things passed in as 'things' array
+  - List of tasks passed in as 'tasks' array
   - Form for adding a new thing
 =====================================================#}
 
@@ -10,29 +9,61 @@
 
 {% block title %}
 
-    Flask Demo
+    Awesome To Do App
 
 {% endblock %}
+
 
 
 {% block content %}
 
-    <h1>Flask Demo App with Turso DB</h1>
+    <h1>Awesome To Do App</h1>
 
-    <p>This is a simple Flask app that connects to a Turso database to save and retrieve data. This can be used as the basis of your web app.</p>
 
-    <p>It includes...</p>
+    <section>
 
-    <ul>
-        <li>Example routes</li>
-        <li>Example static pages</li>
-        <li>Missing page and server error pages</li>
-        <li>DB connection and error handling</li>
-        <li>Example CRUD actions: Create and Delete</li>
-        <li>Flash messages for information</li>
-    </ul>
+        {% for task in tasks %}
 
-    <a href="/things" role="button">Go to the Things...</a>
+            <article class="task">
+                <span class="task-priority">{{ task.priority }}</span>
+                <span class="task-name">{{ task.name }}</span>
+            </article>
+
+        {% else %}
+
+            <p>None!</p>
+
+        {% endfor %}
+
+    </section>
+
+
+    <article>
+
+        <h3>New Task</h3>
+
+        <form action="/add" method="POST">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Task name"
+                required
+            >
+
+            <input
+                type="number"
+                name="priority"
+                min="1"
+                max="5"
+                placeholder="1-5"
+                required
+            >
+
+            <button>Add</button>
+
+        </form>
+
+    </article>
 
 {% endblock %}
-

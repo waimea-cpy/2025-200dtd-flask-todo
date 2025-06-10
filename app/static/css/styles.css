@@ -3,16 +3,18 @@
 =====================================================*/
 
 
-/* ABOUT PAGE -------------------------------------------- */
+/* TASKS -------------------------------------------- */
 
-#tech-stack {
+.task {
     display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+    gap: 2em;
+    align-items: center;
 }
 
-#tech-stack article {
-    flex: 1;
+
+.task-priority {
+    font-size: 1.3em;
+    font-weight: bold;
 }
 
 
