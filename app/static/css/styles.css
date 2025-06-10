@@ -3,6 +3,19 @@
 =====================================================*/
 
 
+/* MAIN -------------------------------------------- */
+
+body > main {
+    max-width: 30rem;
+    padding: 2rem 0;
+}
+
+main h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+
 /* TASKS -------------------------------------------- */
 
 .task {
@@ -12,10 +25,24 @@
 }
 
 
-.task-priority {
+.priority {
     font-size: 1.3em;
     font-weight: bold;
 }
+
+.priority-5 { color: var(--pico-color-red-500); }
+.priority-4 { color: var(--pico-color-pumpkin-500); }
+.priority-3 { color: var(--pico-color-lime-500); }
+.priority-2 { color: var(--pico-color-jade-500); }
+.priority-1 { color: var(--pico-color-azure-500); }
+
+
+/* FORM -------------------------------------------- */
+
+input[name="name"] {
+    min-width: 15rem;
+}
+
 
 
 /* MESSAGES -------------------------------------------- */

@@ -20,14 +20,14 @@
     <h1>Awesome To Do App</h1>
 
 
-    <section>
+    <article>
 
         {% for task in tasks %}
 
-            <article class="task">
-                <span class="task-priority">{{ task.priority }}</span>
-                <span class="task-name">{{ task.name }}</span>
-            </article>
+            <div class="task">
+                <span class="priority priority-{{ task.priority }}">{{ task.priority }}</span>
+                <span class="taskname">{{ task.name }}</span>
+            </div>
 
         {% else %}
 
@@ -35,14 +35,13 @@
 
         {% endfor %}
 
-    </section>
+    </article>
 
 
     <article>
+        <h4>New Task</h4>
 
-        <h3>New Task</h3>
-
-        <form action="/add" method="POST">
+        <form action="/add" method="POST" role="group">
 
             <input
                 type="text"
@@ -51,19 +50,19 @@
                 required
             >
 
-            <input
-                type="number"
-                name="priority"
-                min="1"
-                max="5"
-                placeholder="1-5"
-                required
-            >
+            <select name="priority" aria-label="Select" required>
+                <option selected disabled value="">Priority</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
 
             <button>Add</button>
 
         </form>
-
     </article>
+
 
 {% endblock %}
