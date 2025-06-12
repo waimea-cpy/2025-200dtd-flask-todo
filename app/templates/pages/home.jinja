@@ -24,9 +24,23 @@
 
         {% for task in tasks %}
 
-            <div class="task">
+            <div class="task {% if task.complete %} complete {% endif %}">
+
+                <span class="status">
+                    {% if task.complete %}
+                        <a href="/incomplete/{{ task.id }}">🗹</a>
+                    {% else %}
+                        <a href="/complete/{{ task.id }}">☐</a>
+                    {% endif %}
+                </span>
+
                 <span class="priority priority-{{ task.priority }}">{{ task.priority }}</span>
+
                 <span class="taskname">{{ task.name }}</span>
+
+                <span class="delete">
+                    <a href="/delete/{{ task.id }}" onclick="return confirm('Sure?');">⛒</a>
+                </span>
             </div>
 
         {% else %}

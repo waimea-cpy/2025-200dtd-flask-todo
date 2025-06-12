@@ -24,6 +24,24 @@ main h1 {
     align-items: center;
 }
 
+.task .taskname {
+    flex: 1;
+}
+
+.task.complete {
+    opacity: 0.5;
+}
+
+.task .status a {
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+.task .delete a {
+    text-decoration: none;
+    font-size: 1.2em;
+    color: var(--pico-color-red-500)
+}
 
 .priority {
     font-size: 1.3em;

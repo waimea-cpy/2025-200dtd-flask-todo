@@ -28,7 +28,7 @@ def index():
     with connect_db() as client:
         # Get all the things from the DB
         sql = """
-            SELECT id, name, timestamp, priority
+            SELECT id, name, timestamp, priority, complete
             FROM tasks
             ORDER BY priority DESC
         """
@@ -37,14 +37,6 @@ def index():
 
         # And show them on the page
         return render_template("pages/home.jinja", tasks=tasks)
-
-
-#-----------------------------------------------------------
-# About page route
-#-----------------------------------------------------------
-@app.get("/about/")
-def about():
-    return render_template("pages/about.jinja")
 
 
 #-----------------------------------------------------------
@@ -71,18 +63,50 @@ def add_a_thing():
 
 
 #-----------------------------------------------------------
-# Route for deleting a thing, Id given in the route
+# Route for completing a task, Id given in the route
 #-----------------------------------------------------------
-@app.get("/delete/<int:id>")
-def delete_a_thing(id):
+@app.get("/complete/<int:id>")
+def task_complete(id):
     with connect_db() as client:
-        # Delete the thing from the DB
-        sql = "DELETE FROM things WHERE id=?"
+        # Update the status of the task
+        sql = "UPDATE tasks SET complete=1 WHERE id=?"
         values = [id]
         client.execute(sql, values)
 
         # Go back to the home page
-        flash("Thing deleted", "warning")
-        return redirect("/things")
+        flash("Task updated", "success")
+        return redirect("/")
+
+
+#-----------------------------------------------------------
+# Route for not completing a task, Id given in the route
+#-----------------------------------------------------------
+@app.get("/incomplete/<int:id>")
+def task_incomplete(id):
+    with connect_db() as client:
+        # Update the status of the task
+        sql = "UPDATE tasks SET complete=0 WHERE id=?"
+        values = [id]
+        client.execute(sql, values)
+
+        # Go back to the home page
+        flash("Task updated", "success")
+        return redirect("/")
+
+
+#-----------------------------------------------------------
+# Route for deleting a task, Id given in the route
+#-----------------------------------------------------------
+@app.get("/delete/<int:id>")
+def delete_task(id):
+    with connect_db() as client:
+        # Delete the task from the DB
+        sql = "DELETE FROM tasks WHERE id=?"
+        values = [id]
+        client.execute(sql, values)
+
+        # Go back to the home page
+        flash("Task deleted", "success")
+        return redirect("/")
 
 

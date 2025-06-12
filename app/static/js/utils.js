@@ -22,7 +22,7 @@ window.onload = (event) => {
             else {
                 // Show button as busy
                 button.ariaBusy = true
-                button.innerText = 'Please Wait...'
+                // button.innerText = 'Please Wait...'
             }
         });
     });
