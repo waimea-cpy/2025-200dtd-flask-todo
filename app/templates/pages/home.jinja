@@ -17,29 +17,75 @@
 
 {% block content %}
 
-    <h1>Awesome To Do App</h1>
+    <h1><img src="/static/images/note.svg"> Awesome To Do App</h1>
 
 
+    {# INCOMPLETE TASKS ----------------------------------- #}
     <article>
 
-        {% for task in tasks %}
+        <h4>Tasks To Do</h4>
 
-            <div class="task {% if task.complete %} complete {% endif %}">
+        {% for task in incomplete %}
+
+            <div class="task">
 
                 <span class="status">
-                    {% if task.complete %}
-                        <a href="/incomplete/{{ task.id }}">🗹</a>
-                    {% else %}
-                        <a href="/complete/{{ task.id }}">☐</a>
-                    {% endif %}
+                    <a href="/complete/{{ task.id }}">
+                        ☐
+                    </a>
                 </span>
 
-                <span class="priority priority-{{ task.priority }}">{{ task.priority }}</span>
+                <span class="priority priority-{{ task.priority }}">
+                    {{ task.priority }}
+                </span>
 
-                <span class="taskname">{{ task.name }}</span>
+                <span class="name">
+                    {{ task.name }}
+                </span>
+
+                <span class="meta">
+                    {{ task.timestamp | localtimestamp }}
+                </span>
+            </div>
+
+
+
+        {% else %}
+
+            <p>None!</p>
+
+        {% endfor %}
+
+    </article>
+
+
+    {# COMPLETE TASKS ----------------------------------- #}
+    <article>
+
+        <h4>Completed Tasks</h4>
+
+        {% for task in complete %}
+
+            <div class="task complete">
+
+                <span class="status">
+                    <a href="/incomplete/{{ task.id }}">
+                        🗹
+                    </a>
+                </span>
+
+                <span class="priority priority-{{ task.priority }}">
+                    {{ task.priority }}
+                </span>
+
+                <span class="name">
+                    {{ task.name }}
+                </span>
 
                 <span class="delete">
-                    <a href="/delete/{{ task.id }}" onclick="return confirm('Sure?');">⛒</a>
+                    <a href="/delete/{{ task.id }}" onclick="return confirm('Sure?');">
+                        ⛒
+                    </a>
                 </span>
             </div>
 
@@ -52,6 +98,7 @@
     </article>
 
 
+    {# NEW TASK FORM ----------------------------------- #}
     <article>
         <h4>New Task</h4>
 

@@ -16,25 +16,34 @@ main h1 {
 }
 
 
+/* IMAGES -------------------------------------------- */
+
+h1 img {
+    height: 1.2em;
+    width: auto;
+}
+
+
 /* TASKS -------------------------------------------- */
 
 .task {
     display: flex;
-    gap: 2em;
+    gap: 1.5em;
     align-items: center;
 }
 
-.task .taskname {
+.task .name {
     flex: 1;
-}
-
-.task.complete {
-    opacity: 0.5;
 }
 
 .task .status a {
     text-decoration: none;
-    font-size: 1.5em;
+    font-size: 1.7em;
+}
+
+.task .meta {
+    font-size: 0.6em;
+    opacity: 0.7;
 }
 
 .task .delete a {
@@ -43,7 +52,7 @@ main h1 {
     color: var(--pico-color-red-500)
 }
 
-.priority {
+.task .priority {
     font-size: 1.3em;
     font-weight: bold;
 }
@@ -53,6 +62,14 @@ main h1 {
 .priority-3 { color: var(--pico-color-lime-500); }
 .priority-2 { color: var(--pico-color-jade-500); }
 .priority-1 { color: var(--pico-color-azure-500); }
+
+.task.complete {
+    opacity: 0.5;
+}
+
+.task.complete:hover {
+    opacity: 1;
+}
 
 
 /* FORM -------------------------------------------- */

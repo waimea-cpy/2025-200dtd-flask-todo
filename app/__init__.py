@@ -8,6 +8,7 @@ import html
 from app.helpers.session import init_session
 from app.helpers.db import connect_db
 from app.helpers.errors import register_error_handlers, not_found_error
+from app.helpers.time import register_datetime_handlers, utc_timestamp, utc_timestamp_now
 
 
 # Create the app
@@ -19,6 +20,10 @@ init_session(app)
 # Handle 404 and 500 errors
 register_error_handlers(app)
 
+# Deal with UTC dates in timestamps
+register_datetime_handlers(app)
+
+
 
 #-----------------------------------------------------------
 # Home page route
@@ -26,17 +31,28 @@ register_error_handlers(app)
 @app.get("/")
 def index():
     with connect_db() as client:
-        # Get all the things from the DB
+        # Get all the incomplete tasks from the DB
         sql = """
             SELECT id, name, timestamp, priority, complete
             FROM tasks
+            WHERE complete = 0
             ORDER BY priority DESC
         """
         result = client.execute(sql)
-        tasks = result.rows
+        incomplete = result.rows
+
+        # Get all the complete tasks from the DB
+        sql = """
+            SELECT id, name, timestamp, priority, complete
+            FROM tasks
+            WHERE complete = 1
+            ORDER BY priority DESC
+        """
+        result = client.execute(sql)
+        complete = result.rows
 
         # And show them on the page
-        return render_template("pages/home.jinja", tasks=tasks)
+        return render_template("pages/home.jinja", incomplete=incomplete, complete=complete)
 
 
 #-----------------------------------------------------------
@@ -58,7 +74,6 @@ def add_a_thing():
         client.execute(sql, values)
 
         # Go back to the home page
-        flash(f"Task '{name}' added", "success")
         return redirect("/")
 
 
@@ -74,7 +89,6 @@ def task_complete(id):
         client.execute(sql, values)
 
         # Go back to the home page
-        flash("Task updated", "success")
         return redirect("/")
 
 
@@ -90,7 +104,6 @@ def task_incomplete(id):
         client.execute(sql, values)
 
         # Go back to the home page
-        flash("Task updated", "success")
         return redirect("/")
 
 
@@ -106,7 +119,6 @@ def delete_task(id):
         client.execute(sql, values)
 
         # Go back to the home page
-        flash("Task deleted", "success")
         return redirect("/")
 
 
